@@ -24,8 +24,8 @@ func readChunk(reader io.Reader, chunkLen int) ([]byte, error){
 func readCString(reader io.Reader) (*string, error) {
 	stringBuilder := strings.Builder{}
 
-	buf := make([]byte, 1)
 	for {
+		buf := make([]byte, 1)
 		_, err := reader.Read(buf)
 		if err != nil {
 			return nil, err

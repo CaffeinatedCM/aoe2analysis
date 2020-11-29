@@ -1,1 +1,3 @@
-module "aoe2analysis"
+module aoe2analysis
+
+go 1.15
