@@ -1,0 +1,1 @@
+module "aoe2analysis"
