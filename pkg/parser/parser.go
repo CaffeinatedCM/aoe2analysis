@@ -6,7 +6,6 @@ import (
 	"encoding/binary"
 	"errors"
 	"io"
-	"log"
 	"strings"
 )
 
@@ -55,12 +54,12 @@ func readHeader(reader io.Reader) (*Header, error) {
 	}
 
 	headerReader := flate.NewReader(bytes.NewReader(compressedHeaderBytes))
-	defer func() {
-		err := headerReader.Close()
-		if err != nil {
-			log.Fatalf("could not close header reader")
-		}
-	}()
+	//defer func() {
+	//	err := headerReader.Close()
+	//	if err != nil {
+	//		log.Fatalf("could not close header reader")
+	//	}
+	//}()
 
 	version, err := readCString(headerReader)
 	if err != nil {
