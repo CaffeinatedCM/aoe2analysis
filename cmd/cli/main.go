@@ -2,20 +2,23 @@ package main
 
 import (
 	"aoe2analysis/pkg/parser"
+	"flag"
 	"log"
 	"os"
-	"path"
 )
 
 func main() {
+	filePath := flag.String("file", "", "required - the file to parse")
+	flag.Parse()
 
-	saveGameFolder := "C:\\Users\\caffe\\Games\\Age of Empires 2 DE\\76561198025300479\\savegame"
-	saveGameFile   := "MP Replay v101.101.43210.0 @2020.11.28 220107 (2).aoe2record"
-	fullPath := path.Join(saveGameFolder, saveGameFile)
+	if filePath == nil || *filePath == "" {
+		flag.PrintDefaults()
+		os.Exit(1)
+	}
 
-	file, err := os.Open(fullPath)
+	file, err := os.Open(*filePath)
 	if err != nil {
-		log.Fatalf("Could not open file %q, error: %v", fullPath, err)
+		log.Fatalf("Could not open file %q, error: %v", *filePath, err)
 	}
 	defer func() {
 		err := file.Close()
@@ -30,4 +33,16 @@ func main() {
 	}
 
 	log.Printf("Game: %#v", game)
+	log.Printf("Game: %+v", game)
+
+	log.Printf("Difficulty: %v", game.Header.DE.Difficulty)
+	log.Printf("Victory Type: %v", game.Header.DE.VictoryType)
+	log.Printf("Starting Resources: %v", game.Header.DE.StartingResources)
+	log.Printf("Starting Age: %v - Ending Age: %v", game.Header.DE.StartingAge, game.Header.DE.EndingAge)
+
+	for i, player := range game.Header.DE.Players {
+		log.Printf("Player %v: %v", i, player)
+	}
+
+	log.Printf("ReplayHeader: %+v", game.Header.Replay)
 }
