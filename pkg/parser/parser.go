@@ -133,7 +133,7 @@ func readHeader(reader io.Reader) (*Header, error) {
 	}
 	header.DE.DatasetRef = readUInt32(headerReader)
 	difficulty := readUInt32(headerReader)
-	header.DE.Difficulty = Difficulty(difficulty)
+	header.DE.Difficulty = Difficulty(difficulty) // TODO: This seems to not be correct
 	header.DE.SelectedMapId = readUInt32(headerReader)
 	header.DE.ResolvedMapId = readUInt32(headerReader)
 	header.DE.RevealMap = readUInt32(headerReader)
